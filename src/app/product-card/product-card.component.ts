@@ -1,7 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { ProductCartService } from '../product-cart.service';
-import { Product } from '../products-list/Product';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-product-card',
@@ -12,15 +10,7 @@ import { Product } from '../products-list/Product';
 })
 export class ProductCardComponent {
 
-  products: Product[] = [];
-
-  constructor(private cart: ProductCartService) { }
-
-  addToCart(product: Product): void {
-    this.cart.addToCart(product);
-    product.quantity = 0;
-  }
-
+  @Input() product: any;
   // finalizePurchase(){}
 
 }
