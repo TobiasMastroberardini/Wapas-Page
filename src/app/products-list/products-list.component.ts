@@ -1,85 +1,37 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
+import { CartComponent } from '../cart/cart.component';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { ProductCartService } from '../product-cart.service';
+import { ProductDataService } from '../product-data.service';
 import { Product } from './Product';
+
 
 @Component({
   selector: 'app-products-list',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent],
+  imports: [CommonModule, DatePipe, ProductCardComponent, FormsModule, HttpClientModule, CartComponent, AddToCartButtonComponent],
   templateUrl: './products-list.component.html',
   styleUrl: './products-list.component.scss'
 })
 export class ProductsListComponent {
 
-  products: Product[] = [
-    {
-      name: 'Producto 1',
-      category: 'Categoría A',
-      price: 29.99,
-      stock: 100,
-      image: 'https://via.placeholder.com/300',
-      clearance: false,
-      quantity: 1,
-      description: 'Descripción del Producto 1.'
-    },
-    {
-      name: 'Producto 2',
-      category: 'Categoría B',
-      price: 49.99,
-      stock: 50,
-      image: 'https://via.placeholder.com/300',
-      clearance: true,
-      quantity: 1,
-      description: 'Descripción del Producto 2.'
-    },
-    {
-      name: 'Producto 3',
-      category: 'Categoría C',
-      price: 19.99,
-      stock: 150,
-      image: 'https://via.placeholder.com/300',
-      clearance: false,
-      quantity: 1,
-      description: 'Descripción del Producto 3.'
-    },
-    {
-      name: 'Producto 1',
-      category: 'Categoría A',
-      price: 29.99,
-      stock: 100,
-      image: 'https://via.placeholder.com/300',
-      clearance: false,
-      quantity: 1,
-      description: 'Descripción del Producto 1.'
-    },
-    {
-      name: 'Producto 2',
-      category: 'Categoría B',
-      price: 49.99,
-      stock: 50,
-      image: 'https://via.placeholder.com/300',
-      clearance: true,
-      quantity: 1,
-      description: 'Descripción del Producto 2.'
-    },
-    {
-      name: 'Producto 3',
-      category: 'Categoría C',
-      price: 19.99,
-      stock: 150,
-      image: 'https://via.placeholder.com/300',
-      clearance: false,
-      quantity: 1,
-      description: 'Descripción del Producto 3.'
-    }
-  ];
+  products: Product[] = [];
+  cart: any;
 
-  constructor(private cart: ProductCartService) { }
+  constructor(
+    private productsDataService: ProductDataService
+  ) { }
+
+  ngOnInit(): void {
+    this.productsDataService.getAll().subscribe(products => this.products = products);
+  }
 
   addToCart(product: Product): void {
     this.cart.addToCart(product);
+    product.stock -= product.quantity;
     product.quantity = 0;
   }
 

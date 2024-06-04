@@ -20,6 +20,6 @@ export class ProductCartService {
       item.quantity += product.quantity;
     }
     console.log(this.cartList);
-    this.cartList.next(this._cartList);
+    this.cartList.next(this._cartList); //equivalente a emit de eventos
   }
 }
