@@ -6,6 +6,12 @@
 
 <div class="list">
     @for(product of (cartList | async); track product.name){
-    <app-product-card [product]="product"></app-product-card>
+    <div class="card">
+        <app-product-card [product]="product"></app-product-card>
+        <app-delete-button [product]="product"></app-delete-button>
+    </div>
+
+    } @empty {
+    <p>Carrito vacio</p>
     }
 </div>

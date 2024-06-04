@@ -27,20 +27,36 @@ export class ProductsListComponent implements OnInit {
   products: Product[] = [];
   cart: any;
   productChunks: Product[][] = [];
+  chunkSize: number = 4; // Default chunk size
 
   constructor(private productsDataService: ProductDataService) { }
 
   ngOnInit(): void {
-    this.productsDataService.getAll().subscribe(products => {
-      this.products = products;
-      this.chunkProducts();
-    });
+    if (typeof window !== 'undefined') {
+      this.setChunkSize();
+      this.productsDataService.getAll().subscribe(products => {
+        this.products = products;
+        this.chunkProducts();
+      });
+    }
   }
 
+
+  setChunkSize(): void {
+    const windowSize = window.innerWidth;
+    if (windowSize < 576) { // Extra small screens
+      this.chunkSize = 1;
+    } else if (windowSize < 768) { // Small screens
+      this.chunkSize = 3;
+    } else { // Medium and larger screens
+      this.chunkSize = 4;
+    }
+  }
+
+
   chunkProducts(): void {
-    const chunkSize = 4;
-    for (let i = 0; i < this.products.length; i += chunkSize) {
-      this.productChunks.push(this.products.slice(i, i + chunkSize));
+    for (let i = 0; i < this.products.length; i += this.chunkSize) {
+      this.productChunks.push(this.products.slice(i, i + this.chunkSize));
     }
   }
 

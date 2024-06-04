@@ -22,4 +22,16 @@ export class ProductCartService {
     console.log(this.cartList);
     this.cartList.next(this._cartList); //equivalente a emit de eventos
   }
+
+  removeFromCart(product: Product) {
+    let index = this._cartList.findIndex((item) => item.name === product.name);
+
+    if (index !== -1) {
+      this._cartList.splice(index, 1); // Elimina el elemento del arreglo
+    }
+
+    console.log(this._cartList);
+    this.cartList.next(this._cartList); // Emite el evento con el nuevo estado del carrito
+  }
+
 }
