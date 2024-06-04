@@ -1,37 +1,25 @@
-<div class="list">
-    @for(product of products; track product.name){
+<h2>Carrusel de Productos</h2>
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <div *ngFor="let productChunk of productChunks; let i = index" [class.active]="i === 0" class="carousel-item"
+            data-bs-interval="10000">
+            <div class="row">
+                <div *ngFor="let product of productChunk" class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <app-product-card [product]="product"></app-product-card>
+                    <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- Use products-list for list all products with For cycle -->
-    <app-product-card [product]="product"></app-product-card>
-
-    <!-- Add to cart button -->
-    <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
-
-    } @empty{
-    <p>No hay productos que mostrar</p>
-    }
+    <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
 </div>
 
 <app-cart></app-cart>
-<h3>Carrusel</h3>
-<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-        <div *ngFor="let product of products; let i = index" [class.active]="i === 0" class="carousel-item"
-            data-bs-interval="10000">
-            <app-product-card [product]="product"></app-product-card>
-            <app-add-to-cart-button [product]="product"></app-add-to-cart-button>
-
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>Previus
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>Next
-    </button>
-
-</div>
-
-<img src="/wapasPage/src/assets/cerveza.webp" alt="">
