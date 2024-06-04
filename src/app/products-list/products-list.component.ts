@@ -59,10 +59,4 @@ export class ProductsListComponent implements OnInit {
       this.productChunks.push(this.products.slice(i, i + this.chunkSize));
     }
   }
-
-  addToCart(product: Product): void {
-    this.cart.addToCart(product);
-    product.stock -= product.quantity;
-    product.quantity = 0;
-  }
 }
